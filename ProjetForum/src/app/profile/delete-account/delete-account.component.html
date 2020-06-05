@@ -1,0 +1,19 @@
+<div class="main-container">
+
+    <h1><span style="color: #E91E63">E</span>NTREZ VOTRE MOT DE PASSE<br/>POUR SUPPRIMER VOTRE COMPTE</h1>
+
+    <form [formGroup]="deleteForm" class="form-container" fxLayout="column" fxLayoutAlign="space-between">
+        
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Mot de passe</mat-label>
+            <input matInput type="password" formControlName="password" required>
+            <mat-icon matSuffix color="accent">lock</mat-icon>
+            <mat-error *ngIf="deleteForm.get('password').status === 'INVALID'">
+                <app-validation-errors [errors]="deleteForm.get('password').errors"></app-validation-errors>
+            </mat-error>
+        </mat-form-field>
+        
+        <button mat-raised-button class="delete-button" [class.spinner]="loading" [disabled]="!deleteForm.valid || loading" (click)="submit()">Valider</button>
+        <button style="margin-top: 5%;" mat-raised-button color="primary" (click)="close()">Annuler</button>
+    </form>
+</div>

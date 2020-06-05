@@ -1,0 +1,16 @@
+<div class="main-container">
+  <h1><span style="color: #E91E63">A</span>dministration</h1>
+
+  <mat-card class="admin-container">
+    <mat-sidenav-container class="navigation">
+      <mat-sidenav mode="side" opened class="sidenav">
+        <button class="sidenav-button" mat-button (click)="changeSelected(1)">Utilisateurs</button>
+        <button class="sidenav-button" mat-button (click)="changeSelected(2)">Catégories</button>
+      </mat-sidenav>
+      <mat-sidenav-content class="content">
+        <app-admin-users *ngIf="selected === 1"></app-admin-users>
+        <app-admin-categories *ngIf="selected === 2"></app-admin-categories>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </mat-card>
+</div>

@@ -1,0 +1,78 @@
+.main-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-container {
+    display: flex;
+    flex: 5;
+}
+
+.menu-icon {
+    font-size: 200%;
+    text-align: center;
+    flex: .5;
+}
+
+.buttons-container {
+    flex: 1;
+}
+
+button {
+    margin-left: 2%;
+}
+
+.menu-link {
+    text-decoration: none;
+    color: white;
+    text-align: left;
+    flex: 9;
+}
+
+.account-icon {
+    margin-right: 5%;
+}
+
+hr {
+  border: none;
+  background-color: black;
+  width: 90%;
+  height: 1px;
+}
+
+.mat-menu-div {
+  width: 14vw;
+  min-height: 1vw;
+  max-height: 8vw;
+  text-align: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.notif-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
+  border-radius: 10px;
+  height: 40px;
+  min-height: 40px;
+  margin-top: 5px;
+}
+
+.notif-text {
+  flex: 1;
+  padding-top: 5%;
+  cursor: pointer;
+}
+
+.notification {
+  margin-top: 2%;
+}

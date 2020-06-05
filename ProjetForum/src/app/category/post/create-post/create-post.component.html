@@ -1,0 +1,50 @@
+<button mat-icon-button color="accent" aria-label="goBack button" (click)="goBack()">
+  <mat-icon>arrow_back</mat-icon>
+</button>
+
+<div class="main-container">
+    <h1 *ngIf="this.post === undefined || this.post === null"><span style="color: #E91E63">C</span>RÉER UN POST</h1>
+    <h1 *ngIf="this.post !== undefined && this.post !== null"><span style="color: #E91E63">M</span>ODIFIER UN POST</h1>
+    <form [formGroup]="postForm" class="form-container" fxLayout="column" fxLayoutAlign="space-between">
+
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Catégorie</mat-label>
+          <mat-select [value]="postForm.get('category').value" formControlName="category">
+            <mat-option *ngFor="let category of categories" [value]="category.id">
+              {{category.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Titre</mat-label>
+            <input matInput type="text" formControlName="title" required />
+            <mat-error *ngIf="postForm.get('title').status === 'INVALID'">
+                <app-validation-errors [errors]="postForm.get('title').errors"></app-validation-errors>
+            </mat-error>
+        </mat-form-field>
+
+        <ckeditor #editorComponent [editor]="editor" class="editor" (change)="editorChange($event)" [config]="config"></ckeditor>
+
+        <mat-form-field appearance="outline" color="accent" class="img-input">
+          <mat-label>Ajouter une image</mat-label>
+          <ngx-mat-file-input formControlName="image" accept=".jpg,.png" (change)="showImage()"></ngx-mat-file-input>
+          <mat-icon matSuffix color="accent">image</mat-icon>
+          <mat-error *ngIf="postForm.get('image').hasError('maxContentSize')">
+            La taille totale du fichier ne doit pas être supérieure à {{postForm.get('image')?.getError('maxContentSize').maxSize | byteFormat}} ({{postForm.get('image')?.getError('maxContentSize').actualSize
+            | byteFormat}})
+          </mat-error>
+        </mat-form-field>
+        <p *ngIf="postForm.get('image').value === ''">Taille max : {{maxSize | byteFormat}}</p>
+
+        <div class="img-container" *ngIf="imgUrl !== null && imgUrl !== undefined && imgUrl !== ''">
+          <img [src]="imgUrl" class="image" width="50%" height="50%">
+          <button mat-icon-button title="Supprimer l'image" (click)="deleteImage()"><mat-icon color="warn">clear</mat-icon></button>
+        </div>
+
+        <mat-slide-toggle formControlName="locked" color="warn">Verrouillé</mat-slide-toggle>
+
+        <button mat-raised-button color="accent" [class.spinner]="loading" [disabled]="!postForm.valid || loading || postForm.get('body').value === ''" (click)="submit()">Valider</button>
+        <button style="margin-top: 5%; margin-bottom: 5%;" mat-raised-button color="primary" (click)="goBack()">Annuler</button>
+    </form>
+</div>

@@ -1,0 +1,31 @@
+<div class="main-container">
+    <h1 *ngIf="!recover"><span style="color: #E91E63">S</span>E CONNECTER</h1>
+    <h1 *ngIf="recover"><span style="color: #E91E63">R</span>ÉCUPERER SON COMPTE</h1>
+    <form [formGroup]="signinForm" (ngSubmit)="submit()" class="form-container" fxLayout="column" fxLayoutAlign="space-between">
+        
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Adresse e-mail</mat-label>
+            <input matInput formControlName="email" required>
+            <mat-icon matSuffix color="accent">email</mat-icon>
+            <mat-error *ngIf="signinForm.get('email').status === 'INVALID'">
+                <app-validation-errors [errors]="signinForm.get('email').errors"></app-validation-errors>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="!recover" appearance="outline" color="accent">
+            <mat-label>Mot de passe</mat-label>
+            <input matInput type="password" formControlName="password" required>
+            <mat-icon matSuffix color="accent">lock</mat-icon>
+            <mat-error *ngIf="signinForm.get('password').status === 'INVALID'">
+                <app-validation-errors [errors]="signinForm.get('password').errors"></app-validation-errors>
+            </mat-error>
+        </mat-form-field>
+
+        <re-captcha (resolved)="resolved($event)" siteKey="{{recaptchaKey}}" class="recaptcha"></re-captcha>
+
+        <p *ngIf="!recover" class="link" (click)="setRecover()">Mot de passe oublié ?</p>
+        
+        <button mat-raised-button color="primary" [class.spinner]="loading" [disabled]="(!recover && !signinForm.valid || recover && signinForm.get('email').status === 'INVALID') || loading || invalidCaptcha">Valider</button>
+    </form>
+    <a *ngIf="!recover" href="/register" class="link">Vous ne possédez pas de compte ?</a>
+</div>

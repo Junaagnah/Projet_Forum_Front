@@ -1,0 +1,23 @@
+<div class="main-container">
+    <h1><span style="color: #E91E63;">P</span>ROFIL UTILISATEUR</h1>
+
+    <mat-card class="profile-container">
+        <img class="profile-picture" [src]="profilePictureUrl" width="100" height="100" />
+
+        <h2>{{userProfile.username}}</h2>
+
+        <hr />
+
+        <h3 *ngIf="!userProfile.isBanned" [style.color]="roleColors[userProfile.role]" style="font-weight: bold;">{{userProfile.roleName}}</h3>
+        <h3 *ngIf="userProfile.isBanned" style="font-weight: bold; color: #F44336">Utilisateur banni</h3>
+
+        <p>{{userProfile.description}}</p>
+
+        <hr />
+
+        <button mat-raised-button color="accent" (click)="goToEditProfile()" *ngIf="username === userProfile.username">Modifier le profil</button>
+        <button mat-raised-button color="accent" (click)="updatePassword()" *ngIf="username === userProfile.username">Modifier le mot de passe</button>
+        <button mat-raised-button class="delete-button" (click)="deleteAccount()" *ngIf="username === userProfile.username">Supprimer le compte</button>
+        <button mat-raised-button class="delete-button" (click)="updateUserBan()" *ngIf="username !== userProfile.username && user !== null && user.role >= 2">{{userProfile.isBanned ? "Débannir l'utilisateur" : "Bannir l'utilisateur"}}</button>
+    </mat-card>
+</div>

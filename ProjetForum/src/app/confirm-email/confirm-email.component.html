@@ -1,0 +1,7 @@
+<div class="main-container" *ngIf="!confirmed">
+    <h1><span style="color: #E91E63">C</span>onfirmation de votre e-mail en cours</h1>
+    <mat-progress-spinner *ngIf="loading" color="accent" mode="indeterminate" class="spinner" [diameter]=50 ></mat-progress-spinner>
+</div>
+<div class="main-container" *ngIf="confirmed">
+    <h1><span style="color: #E91E63">V</span>otre compte a bien été confirmé ! Vous pouvez désormais <a href="/signin">vous connecter.</a></h1>
+</div>

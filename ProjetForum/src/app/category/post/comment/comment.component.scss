@@ -1,0 +1,59 @@
+.body-container {
+  flex: 4;
+  max-width: 70%;
+  overflow-wrap: break-word;
+}
+
+.author-container {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  flex-direction: column;
+}
+
+.profile-picture {
+  border-radius: 100%;
+  border: 3px solid #2196F3;
+  margin-top: 10%;
+}
+
+.author-role {
+  font-weight: bold;
+  margin-top: 10%;
+}
+
+.form-container {
+  flex: 9;
+  max-width: 600px;
+  min-width: 100px;
+  width: 70%;
+  text-align: center;
+}
+
+.post-button {
+  width: 80%;
+  margin-top: 5%;
+}
+
+:host ::ng-deep .ck-editor__editable {
+  min-height: 300px !important;
+}
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  animation: spinner .8s linear infinite;
+}

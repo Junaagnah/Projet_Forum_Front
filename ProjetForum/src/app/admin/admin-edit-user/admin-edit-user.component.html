@@ -1,0 +1,56 @@
+<div class="main-container">
+  <h1><span style="color: #E91E63">M</span>ODIFICATION DU PROFIL : {{oldUsername}}</h1>
+  <form [formGroup]="editProfileForm" class="form-container" fxLayout="column" fxLayoutAlign="space-between">
+
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Nom d'utilisateur</mat-label>
+      <input matInput type="text" formControlName="username" autocomplete="off" required/>
+      <mat-error *ngIf="editProfileForm.get('username').status === 'INVALID'">
+        <app-validation-errors [errors]="editProfileForm.get('username').errors"></app-validation-errors>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Adresse e-mail</mat-label>
+      <input matInput type="email" formControlName="email" required />
+      <mat-error *ngIf="editProfileForm.get('email').status === 'INVALID'">
+        <app-validation-errors [errors]="editProfileForm.get('email').errors"></app-validation-errors>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Rôle</mat-label>
+      <mat-select [value]="editProfileForm.get('role').value" formControlName="role">
+        <mat-option *ngFor="let role of roles" [value]="role.id">
+          {{role.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Photo de profil</mat-label>
+      <ngx-mat-file-input formControlName="profilePicture" accept=".jpg,.png" placeholder="Photo de profil" (change)="showImage()"></ngx-mat-file-input>
+      <mat-icon matSuffix color="accent">image</mat-icon>
+      <mat-error *ngIf="editProfileForm.get('profilePicture').hasError('maxContentSize')">
+        La taille totale du fichier ne doit pas être supérieure à {{editProfileForm.get('profilePicture')?.getError('maxContentSize').maxSize | byteFormat}} ({{editProfileForm.get('profilePicture')?.getError('maxContentSize').actualSize
+        | byteFormat}})
+      </mat-error>
+    </mat-form-field>
+    <p *ngIf="editProfileForm.get('profilePicture').value === ''">Taille max : {{maxSize | byteFormat}}</p>
+
+    <img [src]="imgUrl" class="profilePicture" *ngIf="imgUrl !== null && imgUrl !== undefined && imgUrl !== ''" width="100" height="100">
+
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" rows="10"></textarea>
+      <mat-error *ngIf="editProfileForm.get('description').status === 'INVALID'">
+        <app-validation-errors [errors]="editProfileForm.get('description').errors"></app-validation-errors>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-slide-toggle formControlName="isBanned" color="warn">Banni</mat-slide-toggle>
+
+    <button mat-raised-button color="accent" [class.spinner]="loading" [disabled]="!editProfileForm.valid || loading" (click)="submit()">Valider</button>
+    <button style="margin-top: 5%;" mat-raised-button color="primary" (click)="goBack()">Annuler</button>
+  </form>
+</div>

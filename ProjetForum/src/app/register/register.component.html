@@ -1,0 +1,51 @@
+<div class="main-container" *ngIf="!successfullyCreatedAccount">
+    <h1><span style="color: #E91E63">S</span>'INSCRIRE</h1>
+    <form [formGroup]="registerForm" (ngSubmit)="submit()" class="form-container" fxLayout="column" fxLayoutAlign="space-between">
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>Adresse e-mail</mat-label>
+                <input matInput formControlName="email" required>
+                <mat-icon matSuffix color="accent">email</mat-icon>
+                <mat-error *ngIf="registerForm.get('email').status === 'INVALID'">
+                    <app-validation-errors [errors]="registerForm.get('email').errors"></app-validation-errors>
+                </mat-error>
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>Nom d'utilisateur</mat-label>
+                <input matInput formControlName="username" required>
+                <mat-icon matSuffix color="accent">person</mat-icon>
+                <mat-error *ngIf="registerForm.get('username').status === 'INVALID'">
+                    <app-validation-errors [errors]="registerForm.get('username').errors"></app-validation-errors>
+                </mat-error>
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>Mot de passe</mat-label>
+                <input matInput type="password" formControlName="password" required>
+                <mat-icon matSuffix color="accent">lock</mat-icon>
+                <mat-error *ngIf="registerForm.get('password').status === 'INVALID'">
+                    <app-validation-errors [errors]="registerForm.get('password').errors"></app-validation-errors>
+                </mat-error>
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>Confirmation du mot de passe</mat-label>
+                <input matInput type="password" formControlName="confirmPassword" required [errorStateMatcher]="matcher">
+                <mat-icon matSuffix color="accent">lock</mat-icon>
+                <mat-error *ngIf="registerForm.get('confirmPassword').status === 'INVALID' || registerForm.hasError('notSame')">
+                    <app-validation-errors
+                        [errors]="registerForm.get('confirmPassword').status === 'INVALID' ? registerForm.get('confirmPassword').errors : registerForm.errors">
+                    </app-validation-errors>
+                </mat-error>
+            </mat-form-field>
+
+            <re-captcha (resolved)="resolved($event)" siteKey="{{recaptchaKey}}" class="recaptcha"></re-captcha>
+            
+            <button mat-raised-button color="primary" [class.spinner]="loading" [disabled]="!registerForm.valid || loading || invalidRecaptcha">Valider</button>
+    </form>
+    <a href="/signin">Vous possédez déjà un compte ?</a>
+</div>
+<div class="main-container" *ngIf="successfullyCreatedAccount">
+    <h2><span style="color: #E91E63">V</span>otre compte a bien été créé. Un e-mail de vérification vous a été envoyé.</h2>
+    <a href="/signin">Se connecter</a>
+</div>

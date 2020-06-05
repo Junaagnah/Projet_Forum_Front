@@ -1,0 +1,35 @@
+<mat-toolbar color="primary" class="main-container">
+    <div class="info-container">
+        <mat-icon class="menu-icon">chat_bubble_outline</mat-icon>
+        <a class="menu-link" [routerLink]="['']"><h1>Forum</h1></a>
+    </div>
+
+    <div class="buttons-container" *ngIf="user === null">
+        <button mat-button (click)="navigate('/register')">S'inscrire</button>
+        <button mat-button (click)="navigate('/signin')">Se connecter</button>
+        <button mat-button (click)="navigate('/contact')">Nous contacter</button>
+    </div>
+
+    <div class="buttons-container" *ngIf="user !== null">
+        <button mat-button (click)="navigate('/profile')"><mat-icon class="account-icon">account_circle</mat-icon>{{user.username}}</button>
+        <button mat-button (click)="navigate('/messagerie')"><mat-icon class="account-icon">mail</mat-icon>Messagerie</button>
+        <button mat-button *ngIf="user.role === '3'" (click)="navigate('/administration')"><mat-icon class="account-icon">security</mat-icon> Administration</button>
+        <button mat-icon-button [style.color]="notifs.length > 0 ? hasNotifColor : noNotifColor" [matMenuTriggerFor]="appMenu" (click)="readNotifs()">
+          <mat-icon *ngIf="notifs.length === 0">notifications</mat-icon>
+          <mat-icon *ngIf="notifs.length > 0">notification_important</mat-icon>
+        </button>
+        <button mat-button (click)="disconnect()">Se déconnecter</button>
+
+        <mat-menu #appMenu="matMenu" [overlapTrigger]="false" yPosition="below" xPosition="before">
+          <div class="mat-menu-div">
+            <p class="notif-text" *ngIf="notifs.length === 0">Vous n'avez aucune notification.</p>
+            <div *ngFor="let notif of notifs" class="notification">
+              <div class="notif-content" [style.background-color]="notif.read ? readColor : notReadColor">
+                <p class="notif-text" [innerHtml]="notif.content" (click)="goToElement(notif)"></p>
+                <button mat-icon-button color="warn" (click)="deleteNotif(notif)"><mat-icon>clear</mat-icon></button>
+              </div>
+            </div>
+          </div>
+        </mat-menu>
+    </div>
+</mat-toolbar>

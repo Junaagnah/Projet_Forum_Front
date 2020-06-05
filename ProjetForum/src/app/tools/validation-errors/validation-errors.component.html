@@ -1,0 +1,11 @@
+<ng-container *ngIf="errors && errors['required']"> Requis</ng-container>
+<ng-container *ngIf="errors && errors['usernameNotUnique']">Ce nom d'utilisateur est déjà utilisé</ng-container>
+<ng-container *ngIf="errors && errors['emailNotUnique']">Cette adresse e-mail est déjà utilisée</ng-container>
+<ng-container *ngIf="errors && errors['email']">Merci d'entrer une adresse e-mail valide</ng-container>
+<ng-container *ngIf="errors && errors['notSame']">Les mots de passe ne correspondent pas</ng-container>
+
+<ng-container *ngIf="errors && errors['lowercase']">Le mot de passe doit contenir au moins une lettre minuscule</ng-container>
+<ng-container *ngIf="errors && errors['uppercase']">Le mot de passe doit contenir au moins une lettre majuscule</ng-container>
+<ng-container *ngIf="errors && errors['number']">Le mot de passe doit contenir au moins un chiffre</ng-container>
+<ng-container *ngIf="errors && errors['specialCharacter']">Le mot de passe doit contenir au moins un caractère spécial</ng-container>
+<ng-container *ngIf="errors && errors['length']">Le mot de passe doit contenir huit caractères ou plus</ng-container>

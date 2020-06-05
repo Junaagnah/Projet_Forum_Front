@@ -1,0 +1,21 @@
+<button mat-icon-button color="accent" aria-label="goBack button" (click)="goBack()">
+  <mat-icon>arrow_back</mat-icon>
+</button>
+
+<div class="main-container">
+  <h1><span style="color: #E91E63">L</span>ISTE DES POSTS</h1>
+
+  <mat-card class="posts">
+
+    <mat-card class="post" *ngFor="let post of posts" (click)="navigateToPost(post.id)">
+      <mat-icon>chat</mat-icon>
+
+      <h3><span class="contact"><span style="font-weight: bold;">{{post.title}}</span> - {{post.authorUsername}}</span></h3>
+    </mat-card>
+
+    <div class="bottom-container">
+      <button class="button" mat-raised-button color="accent" (click)="navigateToNewPost()">Nouveau post</button>
+      <mat-paginator [length]="postCount" [pageSize]="10" (page)="changePage($event)"></mat-paginator>
+    </div>
+  </mat-card>
+</div>

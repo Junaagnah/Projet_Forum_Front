@@ -1,0 +1,27 @@
+<div class="main-container">
+  <h1><span style="color: #E91E63">N</span>OUVEAU MESSAGE</h1>
+  <form [formGroup]="newMessageForm" class="form-container" fxLayout="column" fxLayoutAlign="space-between">
+
+    <mat-form-field appearance="outline" color="accent">
+      <mat-select formControlName="user" placeholder="Utilisateur" required>
+        <mat-option>
+          <ngx-mat-select-search formControlName="userSearch" placeholderLabel="Rechercher un utilisateur" noEntriesFoundLabel="Aucun utilisateur n'a été trouvé" (keyup)="searchUser()"></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let user of users" [value]="user.id">
+          {{user.userName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Message</mat-label>
+      <textarea matInput formControlName="content" rows="5" required></textarea>
+      <mat-error *ngIf="newMessageForm.get('content').status === 'INVALID'">
+        <app-validation-errors [errors]="newMessageForm.get('content').errors"></app-validation-errors>
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" [class.spinner]="loading" [disabled]="!newMessageForm.valid || loading" (click)="submit()">Valider</button>
+    <button style="margin-top: 5%;" mat-raised-button color="primary" (click)="goBack()">Annuler</button>
+  </form>
+</div>

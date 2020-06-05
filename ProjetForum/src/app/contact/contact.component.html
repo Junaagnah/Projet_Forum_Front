@@ -1,0 +1,26 @@
+<div class="main-container">
+    <h1><span style="color: #E91E63">C</span>ONTACT</h1>
+    <form [formGroup]="contactForm" (ngSubmit)="submit()" class="form-container" fxLayout="column" fxLayoutAlign="space-between">
+        
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Adresse e-mail</mat-label>
+            <input matInput type="email" formControlName="email" required />
+            <mat-icon matSuffix color="accent">mail</mat-icon>
+            <mat-error *ngIf="contactForm.get('email').status === 'INVALID'">
+                <app-validation-errors [errors]="contactForm.get('email').errors"></app-validation-errors>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Votre message</mat-label>
+            <textarea rows="10" matInput formControlName="message" required></textarea>
+            <mat-error *ngIf="contactForm.get('message').status === 'INVALID'">
+                <app-validation-errors [errors]="contactForm.get('message').errors"></app-validation-errors>
+            </mat-error>
+        </mat-form-field>
+
+        <re-captcha (resolved)="resolved($event)" siteKey="{{recaptchaKey}}" class="recaptcha"></re-captcha>
+
+        <button mat-raised-button color="primary" [class.spinner]="loading" [disabled]="!contactForm.valid || loading || invalidCaptcha">Envoyer</button>
+    </form>
+</div>

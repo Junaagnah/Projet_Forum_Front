@@ -1,0 +1,34 @@
+<div class="main-container">
+  <h1 *ngIf="categoryId === 0"><span style="color: #E91E63">C</span>RÉER UNE CATÉGORIE</h1>
+  <h1 *ngIf="categoryId !== 0"><span style="color: #E91E63">M</span>ODIFIER UNE CATÉGORIE</h1>
+  <form [formGroup]="categoryForm" class="form-container" fxLayout="column" fxLayoutAlign="space-between">
+
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Nom de la catégorie</mat-label>
+      <input matInput type="text" formControlName="name" autocomplete="off" required/>
+      <mat-error *ngIf="categoryForm.get('name').status === 'INVALID'">
+        <app-validation-errors [errors]="categoryForm.get('name').errors"></app-validation-errors>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Description</mat-label>
+      <input matInput type="text" formControlName="description" autocomplete="off" />
+      <mat-error *ngIf="categoryForm.get('description').status === 'INVALID'">
+        <app-validation-errors [errors]="categoryForm.get('description').errors"></app-validation-errors>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Rôle</mat-label>
+      <mat-select [value]="categoryForm.get('role').value" formControlName="role">
+        <mat-option *ngFor="let role of roles" [value]="role.id">
+          {{role.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" [class.spinner]="loading" [disabled]="!categoryForm.valid || loading" (click)="submit()">Valider</button>
+    <button style="margin-top: 5%;" mat-raised-button color="primary" (click)="goBack()">Annuler</button>
+  </form>
+</div>

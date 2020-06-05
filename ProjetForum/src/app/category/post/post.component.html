@@ -1,0 +1,49 @@
+<button mat-icon-button color="accent" aria-label="goBack button" (click)="goBack()">
+  <mat-icon>arrow_back</mat-icon>
+</button>
+
+<div class="main-container">
+  <h1>{{post.title}}</h1>
+
+  <div class="post-container">
+    <mat-card class="author-container">
+      <mat-card-title>{{post.authorProfile.username}}</mat-card-title>
+
+      <img [src]="post.authorProfile.profilePictureUrl" class="profile-picture" alt="Profile picture" width="100" height="100"/>
+
+      <h3 [style.color]="roleColors[post.authorProfile.role]" class="author-role">{{post.authorProfile.roleName}}</h3>
+
+      <button class="post-button" mat-raised-button color="accent" (click)="goToProfile()">Voir le profil</button>
+      <button class="post-button" mat-raised-button color="accent" *ngIf="actualUser === post.authorProfile.username || (user !== null && user.role >= 2 )" (click)="editPost()">Modifier</button>
+      <button class="post-button" mat-raised-button color="warn" *ngIf="actualUser === post.authorProfile.username || (user !== null && user.role >= 2 )" (click)="deletePost()">Supprimer</button>
+    </mat-card>
+    <mat-card class="body-container" [innerHTML]="post.body"></mat-card>
+  </div>
+
+  <mat-accordion class="expansion-panel" *ngIf="imgUrl !== null && imgUrl !== undefined && imgUrl !== ''">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>Image liée au post</mat-expansion-panel-header>
+        <img [src]="imgUrl" class="img" />
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <hr *ngIf="post.comments.length > 0" style="margin-bottom: 2.5%;" />
+
+  <div class="comments-container" *ngFor="let comment of post.comments">
+    <app-comment class="comment-container" [comment]="comment"></app-comment>
+  </div>
+
+  <hr *ngIf="post.locked || (actualUser !== null && actualUser !== undefined)"/>
+
+  <div class="ckeditor-container" *ngIf="!post.locked && actualUser !== null && actualUser !== undefined">
+    <ckeditor [editor]="editor" class="editor" (change)="editorChange($event)" style="width: 100%; margin-top: 3%;" [config]="config"></ckeditor>
+    <button mat-raised-button color="accent" class="ckeditor-button" (click)="submit()" [disabled]="loading || !this.commentForm.valid || this.commentForm.get('comment').value == ''">Valider</button>
+  </div>
+
+  <div class="main-container" *ngIf="post.locked">
+    <mat-card style="width: 70%; text-align: center; margin-top: 2.5%; margin-bottom: 2.5%; display: flex; flex-direction: row; align-items: center; justify-content: center;">
+      <mat-icon color="warn" style="margin-right: 1%;">lock</mat-icon>
+      <p>Ce post a été verrouillé. Vous ne pouvez pas y répondre.</p>
+    </mat-card>
+  </div>
+</div>

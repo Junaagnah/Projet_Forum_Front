@@ -1,0 +1,23 @@
+<span *ngFor="let category of categories;">
+    <mat-accordion>
+        <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{category.name}}
+            </mat-panel-title>
+            <mat-panel-description>
+                {{category.description}}
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <ng-template [matExpansionPanelContent] class="ng-template">
+            <span *ngFor="let post of category.posts;">
+                <app-index-post [post]="post" *ngIf="post.category === category.id"></app-index-post>
+            </span>
+
+            <button mat-raised-button color="accent" (click)="navigateToCategory(category.id)">Voir tous les posts</button>
+            <button style="margin-left: 1%;" mat-raised-button color="accent" *ngIf="user !== null" (click)="createPost(category.id)">Créer un post</button>
+        </ng-template>
+        </mat-expansion-panel>
+    </mat-accordion>
+</span>

@@ -1,0 +1,39 @@
+<button mat-icon-button color="accent" aria-label="goBack button" (click)="goBack()">
+  <mat-icon>arrow_back</mat-icon>
+</button>
+
+<div class="main-container">
+  <h1><span style="color: #E91E63">C</span>ONVERSATION</h1>
+
+  <mat-card class="messages-container" id="conv-container">
+    <div style="width: 100%" *ngFor="let message of messages">
+      <p>{{message.dateString}}</p>
+      <div class="msg-container" [style.flex-direction]="getFlexDirection(message.senderProfile.username)" >
+        <mat-card class="author-container">
+          <mat-card-title>{{message.senderProfile.username}}</mat-card-title>
+
+          <img [src]="forumApiUrl + '/' + message.senderProfile.profilePicture" class="profile-picture" alt="Profile picture" width="100" height="100"/>
+
+          <button class="msg-button" mat-raised-button color="warn" *ngIf="currentUsername === message.senderProfile.username" (click)="deleteMessage(message.id)">Supprimer</button>
+        </mat-card>
+        <mat-card class="content-container">
+          {{message.content}}
+        </mat-card>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-card class="answer-container">
+    <form [formGroup]="answerForm" class="response-form">
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Réponse</mat-label>
+        <textarea matInput formControlName="message" required rows="4"></textarea>
+        <mat-error *ngIf="answerForm.get('message').status === 'INVALID'">
+          <app-validation-errors [errors]="answerForm.get('message').errors"></app-validation-errors>
+        </mat-error>
+      </mat-form-field>
+
+      <button class="submit-button" mat-raised-button color="accent" (click)="answer()" [disabled]="loading || !answerForm.valid">Répondre</button>
+    </form>
+  </mat-card>
+</div>

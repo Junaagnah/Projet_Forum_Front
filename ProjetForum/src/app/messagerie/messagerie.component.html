@@ -1,0 +1,16 @@
+<div class="main-container">
+  <h1><span style="color: #E91E63">M</span>essagerie</h1>
+
+  <mat-card class="conversations-container">
+    <h2 *ngIf="conversations.length === 0">Vous n'avez aucune conversation.</h2>
+    <div class="conversations" *ngIf="conversations.length > 0">
+      <mat-card class="conversation" *ngFor="let conv of conversations" (click)="navigate('messagerie/conversation/' + conv.id)">
+        <mat-icon>chat</mat-icon>
+
+        <h3><span class="contact">{{conv.contactUsername}}</span></h3>
+      </mat-card>
+    </div>
+  </mat-card>
+
+  <button mat-raised-button color="accent" (click)="navigate('messagerie/new')">Nouvelle conversation</button>
+</div>

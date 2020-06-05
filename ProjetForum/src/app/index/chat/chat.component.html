@@ -1,0 +1,37 @@
+<mat-card class="container">
+  <mat-card-title style="color: white;">
+    CHAT
+  </mat-card-title>
+    <mat-card class="msg_history" id="history">
+      <mat-card class="messages" *ngFor="let msg of messages">
+          <div class="msg">
+            <div class="author-container" [style.background-color]="roleColors[msg.userRole]" (click)="navigateToProfile(msg.username)">
+              <h3 class="author">{{msg.username}}</h3>
+            </div>
+            <p class="msg_content">{{msg.message}}</p>
+            <button mat-icon-button color="warn" (click)="deleteMessage(msg)" *ngIf="user.username === msg.username"><mat-icon>clear</mat-icon></button>
+            <button mat-icon-button *ngIf="user.username !== msg.username && user.role >= 2" [matMenuTriggerFor]="msgMenu"><mat-icon>more_horiz</mat-icon></button>
+          </div>
+
+          <mat-menu #msgMenu="matMenu" [overlapTrigger]="false" yPosition="below" xPosition="before">
+            <div class="mat-menu-div">
+              <button class="menu-button" mat-raised-button (click)="deleteMessage(msg)">Supprimer</button>
+              <button class="menu-button" mat-raised-button color="warn" (click)="banUser(msg.username)">Bannir l'utilisateur</button>
+            </div>
+          </mat-menu>
+      </mat-card>
+    </mat-card>
+    <mat-card class="type_msg">
+      <form [formGroup]="messageForm" style="width: 100%;">
+        <mat-form-field appearance="outline" color="accent" class="msg_input">
+          <mat-label>
+            Votre message
+          </mat-label>
+          <input matInput formControlName="message" type="text" (keydown.enter)="sendMessage()" autocomplete="off" />
+        </mat-form-field>
+        <button mat-raised-button (click)="sendMessage()" color="accent">ENVOYER</button>
+      </form>
+    </mat-card>
+</mat-card>
+
+

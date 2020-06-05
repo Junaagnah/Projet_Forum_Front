@@ -1,0 +1,10 @@
+<div class="main-container">
+  <h1><span style="color: #E91E63">M</span>ODIFIER VOTRE COMMENTAIRE</h1>
+
+  <ckeditor #editorComponent [editor]="editor" class="editor" (change)="editorChange($event)"></ckeditor>
+
+  <div class="buttons-container">
+    <button mat-raised-button color="accent" [class.spinner]="loading" [disabled]="loading || oldComment === this.commentForm.get('comment').value" (click)="submit()">Valider</button>
+    <button style="margin-top: 5%;" mat-raised-button color="primary" (click)="close()">Annuler</button>
+  </div>
+</div>

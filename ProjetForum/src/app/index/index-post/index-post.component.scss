@@ -1,0 +1,23 @@
+mat-card {
+    margin-bottom: 1%;
+    background-color: #3F51B5;
+    cursor: pointer;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+mat-icon {
+  color: white;
+}
+
+h3 {
+  margin-left: 1%;
+  color: white;
+}
+
+.post-title {
+  font-weight: bold;
+}

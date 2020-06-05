@@ -1,0 +1,13 @@
+<div class="main-container">
+    <h1><span style="color: #E91E63">F</span>orum</h1>
+
+    <app-chat *ngIf="user !== null"></app-chat>
+
+    <app-index-category *ngIf="data !== null" [categories]="data"></app-index-category>
+
+<!--    <button *ngIf="user !== null && user.role == 3" mat-fab aria-label="Créer une catégorie">
+        <mat-icon>add</mat-icon>
+    </button>
+
+    <div *ngIf="user === null || user === undefined || user.role < 3" style="margin-top: 5%;"></div>-->
+</div>

@@ -1,0 +1,13 @@
+
+  <mat-card class="author-container">
+    <mat-card-title>{{comment.authorProfile.username}}</mat-card-title>
+
+    <img [src]="comment.authorProfile.profilePictureUrl" class="profile-picture" alt="Profile picture" width="100" height="100"/>
+
+    <h3 [style.color]="roleColors[comment.authorProfile.role]" class="author-role">{{comment.authorProfile.roleName}}</h3>
+
+    <button class="post-button" mat-raised-button color="accent" (click)="goToProfile()">Voir le profil</button>
+    <button class="post-button" mat-raised-button color="accent" *ngIf="actualUser === comment.authorProfile.username || (user !== null && user.role >= 2 )" (click)="editComment()">Modifier</button>
+    <button class="post-button" mat-raised-button color="warn" *ngIf="actualUser === comment.authorProfile.username || (user !== null && user.role >= 2 )" (click)="deleteComment()">Supprimer</button>
+  </mat-card>
+  <mat-card class="body-container" [innerHTML]="comment.body"></mat-card>
